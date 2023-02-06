@@ -7,7 +7,12 @@ find = int(input("Enter the no want to search: "))
 def linear_search(arr,x):
     for i in range(len(arr)):
         if arr[i] == x:
-            print("Found at index " ,i)
-    print("Not found") 
+            return i
+    return -1
 
-linear_search(arr,find)
+result = linear_search(arr,find)
+if result == -1:
+    print("Not Found")
+
+else:
+    print("Element found at ", result)
