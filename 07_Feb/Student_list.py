@@ -2,8 +2,8 @@
 
 users =[]
 
-dict = {}
-dict['subject'] =[]
+student_dict = {}
+student_dict['subject'] =[]
 
 def student_list(users):
     return users
@@ -13,31 +13,23 @@ def update(users):
     name = input("Enter the name:")
     subject = input("Enter the subject:")
     Class = input("Enter the class:")
-
     for i in users:
         if i['roll_no'] == id:
-            dict['name'] =  name
-            dict['subject'].append(subject)
-            dict['class'] =  Class
+            student_dict['name'] =  name
+            student_dict['subject'].append(subject)
+            student_dict['class'] =  Class
         
 
 def search(users):
     name = input("Enter the name: ")
-    for i in users:
-        if i['name'] == name:
-            user = i
-        else:
-            user = None
-    return user
+    user = filter(lambda i: i['name'] == name, users)
+    return list(user) 
 
 def delete_student(users):
     id = int(input("Enter the roll number:"))
     for i in users:
         if i['roll_no'] == id:
             users.remove(i)
-    
-
-
 
 def add_student():
     roll_no = int(input("Enter the Roll number:"))
@@ -45,14 +37,15 @@ def add_student():
     subject = input("Enter the subject:")
     Class = input("Enter the class:")
 
-    dict['roll_no'] =roll_no
-    dict['name']=name
-    dict['subject'].append(subject)
-    dict['class'] = Class
+    student_dict['roll_no'] =roll_no
+    student_dict['name']=name
+    student_dict['subject'].append(subject)
+    student_dict['class'] = Class
 
-    users.append(dict)
-    return dict
+    users.append(student_dict)
+    return student_dict
 
+# will exit with option 6
 while True:
     
     print("1. List the Student list")
