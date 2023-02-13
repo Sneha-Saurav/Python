@@ -5,12 +5,27 @@ import maskpass
 from cryptography.fernet import Fernet
 
 
-
+roll_no=[]
 Subjects =[]
 #Email pattern
 regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 fields =['First Name', 'Last Name' , 'Date of Birth', 'Email', 'Password' ,'Subjects','Class', 'Age']
 r_p = r'[A-Za-z0-9@#$%^&+=]{8,}'
+# with open('../user.csv') as fp:
+#         csvreader = csv.reader(fp)
+#         fields = next(csvreader) # extract the field name 
+#         for i in csvreader:
+#             roll_no.append(i[0])
+#         print(roll_no)
+
+
+# def auto_incremt():
+#     count =1
+#     if count not in roll_no:
+#         roll_no.append(count)
+#     else:
+#         count += 1
+#     return count
 
 #Password encrypter 
 key = Fernet.generate_key()
@@ -54,11 +69,9 @@ def Register_user():
     valid_password = is_valid_password(password)
     password = encrypt_password(valid_password)
     print(password)
-    #read the list
-    with open('user.csv') as fp:
-        csvreader = csv.reader(fp)
-        fields = next(csvreader) # extract the field name 
-        user = list(csvreader)
+    # roll_no = auto_incremt()
+    # read the list
+   
 
     email_exist = valid_email in (item for sublist in user for item in sublist)
     print(email_exist)
@@ -67,13 +80,15 @@ def Register_user():
         raise Exception("Already registered, Please Login")
     else:
         print("correct")
-        with open('user.csv', 'a', newline="") as fp:
+        with open('../user.csv', 'a', newline="") as fp:
             csvwrite =  csv.writer(fp)
-            data = [first_name, Last_name , date_of_birth, valid_email, password ,Subjects,Class, Age]
+            # fields =['Roll_no','first_name','Last_name','Birth_Date','Email','Password','Subjects','class','Age']
+            # csvwrite.writerow(fields)
+            data = [roll_no,first_name, Last_name , date_of_birth, valid_email, password ,Subjects,Class, Age]
             csvwrite.writerow(data)
 
 def Login_user():
-    with open('user.csv') as fp:
+    with open('../user.csv') as fp:
         csvreader = csv.reader(fp)
         fields = next(csvreader) # extract the field name 
         user = list(csvreader)
@@ -97,6 +112,15 @@ def Login_user():
     
     return res
 
+def update_profile():
+    pass
+
+def delete_profile():
+    pass
+
+
+
+
 while True:
     print("1. Register")
     print("2. Login")
@@ -105,11 +129,35 @@ while True:
     option  =int(input("Choose the options:"))
     if option == 1:
         res = Register_user()
-        print("Registered Sucessfully")
-        #register
+        print("Registered Sucessfully!")
+        print("1. Login")
+        print("2. Exit")
+        if option ==1:
+            Login_user()
+            print("Login Successfully")
+        elif option ==2:
+            break
+        else:
+            print("Invalid Input")
     elif option == 2:
         res =Login_user()
+        print("Login Successfully")
         print(res)
+        print("1. Update Profile")
+        print("2. Delete account")
+        print("3. Exit")
+        if option ==1:
+            #update
+            pass
+        elif option == 2:
+            #delete 
+            pass
+        elif option ==3:
+            #exit
+            break
+        else:
+            print("Invalid Input")
+
     elif option == 3:
         break
     else:
