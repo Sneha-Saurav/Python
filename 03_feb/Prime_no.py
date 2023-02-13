@@ -14,7 +14,7 @@ def Prime_no(lower, upper):
             
 #call fuction 
 Prime_no(lower, upper)
-
+#Assignment : Application 
 
 
 

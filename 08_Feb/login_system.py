@@ -24,9 +24,11 @@ def encrypt_password(password):
 
 def is_valid_password(password):
     if re.fullmatch(r_p,password):
+        print("correct")
         return password
     else:
         raise Exception("Invalid Format of Password")
+        
 #Email validation
 def is_valid(email):
     if  re.fullmatch(regex,email):
@@ -35,7 +37,6 @@ def is_valid(email):
         print("wrong")
         raise Exception("Invalid Email")
 def Register_user():
-    
     first_name = input("First Name: ")
     Last_name = input("Last Name: ")
     date_of_birth = input("Date of Birth in (DD/MM/YYYY) format: ")
@@ -49,14 +50,27 @@ def Register_user():
     Age = int(today - birthdate.year)
     Subjects.append(subject)
     valid_email =is_valid(email)
-    print(password)
+    print(valid_email)
     valid_password = is_valid_password(password)
     password = encrypt_password(valid_password)
+    print(password)
+    #read the list
+    with open('user.csv') as fp:
+        csvreader = csv.reader(fp)
+        fields = next(csvreader) # extract the field name 
+        user = list(csvreader)
 
-    with open('user.csv', 'a', newline="") as fp:
-        csvwrite =  csv.writer(fp)
-        data = [first_name, Last_name , date_of_birth, valid_email, valid_password ,Subjects,Class, Age]
-        csvwrite.writerow(data)
+    email_exist = valid_email in (item for sublist in user for item in sublist)
+    print(email_exist)
+    if email_exist:
+        print("wrong")
+        raise Exception("Already registered, Please Login")
+    else:
+        print("correct")
+        with open('user.csv', 'a', newline="") as fp:
+            csvwrite =  csv.writer(fp)
+            data = [first_name, Last_name , date_of_birth, valid_email, password ,Subjects,Class, Age]
+            csvwrite.writerow(data)
 
 def Login_user():
     with open('user.csv') as fp:
@@ -64,16 +78,24 @@ def Login_user():
         fields = next(csvreader) # extract the field name 
         user = list(csvreader)
     print(user)
+    email = input("Email: ")
+    password = maskpass.askpass(prompt="Password:", mask="*")
+    valid_email =is_valid(email)
+    print(valid_email)
+    valid_password = is_valid_password(password)
+    password = encrypt_password(valid_password)
+    email_exist = valid_email in (item for sublist in user for item in sublist)
 
-
-
-
-
-
-
+    if email_exist:
+        password_match = valid_password in (item for sublist in user for item in sublist)
+        if password_match:
+            res =  "Login Successfully!"
+        else:
+            raise Exception("Wrong Credentials!")
+    else:
+        raise Exception("Email not found , Please register")
     
-
-
+    return res
 
 while True:
     print("1. Register")
@@ -86,8 +108,8 @@ while True:
         print("Registered Sucessfully")
         #register
     elif option == 2:
-        Login_user()
-        pass
+        res =Login_user()
+        print(res)
     elif option == 3:
         break
     else:
