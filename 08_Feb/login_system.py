@@ -11,21 +11,26 @@ Subjects =[]
 regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 fields =['First Name', 'Last Name' , 'Date of Birth', 'Email', 'Password' ,'Subjects','Class', 'Age']
 r_p = r'[A-Za-z0-9@#$%^&+=]{8,}'
-# with open('../user.csv') as fp:
-#         csvreader = csv.reader(fp)
-#         fields = next(csvreader) # extract the field name 
-#         for i in csvreader:
-#             roll_no.append(i[0])
-#         print(roll_no)
+with open('../user.csv') as fp:
+        csvreader = csv.reader(fp)
+        fields = next(csvreader) # extract the field name 
+        for i in csvreader:
+            roll_no.append(int(i[0]))
+        print(roll_no)
 
 
-# def auto_incremt():
-#     count =1
-#     if count not in roll_no:
-#         roll_no.append(count)
-#     else:
-#         count += 1
-#     return count
+
+def auto_incremt():
+    count =1
+    if count not in roll_no:
+        print("yes")
+        roll_no.append(count)
+    else:
+        print("no")
+        for i in roll_no:
+            if count == i:
+                 count += 1
+    return count
 
 #Password encrypter 
 key = Fernet.generate_key()
@@ -69,10 +74,12 @@ def Register_user():
     valid_password = is_valid_password(password)
     password = encrypt_password(valid_password)
     print(password)
-    # roll_no = auto_incremt()
+    roll_no = auto_incremt()
     # read the list
-   
-
+    with open('../user.csv') as fp:
+        csvreader = csv.reader(fp)
+        fields = next(csvreader) # extract the field name 
+        user = list(csvreader)
     email_exist = valid_email in (item for sublist in user for item in sublist)
     print(email_exist)
     if email_exist:
