@@ -11,7 +11,7 @@ class Products(Brands):
     def __init__(self,name,item):
       Brands.__init__(self,name)
       self.item = item
-    def __str__(self):
+    def __str__(self):    # dunder method 
        return "Brand: {} , Product: {}".format(self.name, self.item)
 
 print("###############################################################################")      
