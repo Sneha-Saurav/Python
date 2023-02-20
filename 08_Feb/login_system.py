@@ -4,7 +4,10 @@ import re
 import maskpass
 from cryptography.fernet import Fernet
 
-
+# remove the regex and use function 
+# @validate_password(min_length=6)
+# @validate_email
+# Def register(name, phone, email, password):
 roll_no=[]
 Subjects =[]
 #Email pattern
