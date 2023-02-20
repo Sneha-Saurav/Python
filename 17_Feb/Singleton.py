@@ -1,0 +1,15 @@
+class Singleton:
+    def __new__(cls, *args, **kwargs):
+        if not hasattr(cls, '_instance'):
+            cls._instance = super().__new__(cls, *args, **kwargs)
+            return cls._instance
+        else:
+            raise Exception("Already creating")
+    
+        
+    
+a = Singleton()
+a.data = "object"
+print(a.data)
+b = Singleton()
+print(b.data)
