@@ -105,23 +105,23 @@ def BurgerFactory(burger, size):
         'combo': BurgerCombo(size)
     }
 
-    return cls_dict[burger.lower()]
+    return cls_dict[burger]
 
 
-class_list =[VegBurger,CheeseBurger,ChickenBurger,FishBurger, BurgerCombo, BeefBurger]
+class_list =['cheese','veg','chicken','beef', 'fish', 'combo']
 
 
 for x in class_list:
-    if x == BurgerCombo:
-        print("Items : {}".format(x('S').items()))
-        print("Price: {}".format(x('S').price()))
+    if x == 'combo':
+        print("Items : {}".format(BurgerFactory(x,"S").items()))
+        print("Price: {}".format(BurgerFactory(x,'S').price()))
         print("__________________________________________________________________________")
 
     else:
-        print("Items : {}".format(x('S').items()))
-        print("Price for S size : {}".format(x('S').price()))
-        print("Price for M size : {}".format(x('M').price()))
-        print("Price for L size : {}".format(x('L').price()))
+        print("Items : {}".format(BurgerFactory(x,"S").items()))
+        print("Price for S size : {}".format(BurgerFactory(x,'S').price()))
+        print("Price for M size : {}".format(BurgerFactory(x,'M').price()))
+        print("Price for L size : {}".format(BurgerFactory(x,'L').price()))
         print("__________________________________________________________________________")
 
 
