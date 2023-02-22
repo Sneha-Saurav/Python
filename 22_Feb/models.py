@@ -1,36 +1,59 @@
-import random 
+import uuid 
 import json
+from json.decoder import *
+import os
+
+
 c_data =[]
 blog_data=[]
+data =[]
 user ={}
 blog ={}
 def generate_uuid():
-    id = random.randint(1,100000)
-    return id
+    id = uuid.uuid4()
+    return str(id)
 
+
+def primary_key(func):
+        roll_no = 0 
+        def wrapper(*args, **kwargs):
+            nonlocal roll_no
+            roll_no += 1
+            return func(*args,pk=roll_no)
+        return wrapper
+
+       
+         
+
+     
 
 class User(object):
-    def __init__(self, first_name, last_name, email, mobile_no, uuid):
+    def __init__(self, first_name, last_name, email, mobile_no, pk=None):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.mobile_no = mobile_no
         self.uuid = generate_uuid()
 
-    
-    def set_user(self):
+    @primary_key
+    def set_user(self, pk=None):
         user['firstname'] = self.first_name
         user['lastname'] = self.last_name
         user['email'] = self.email
         user['mobile_no'] = self.mobile_no
         user['id'] = self.uuid
-        with open('user.json')as fp:
-             data = json.load(fp)
+        user['primary_key'] = pk
+        print(pk)
+        if os.path.isfile('user.json') and open('user.json').read(1):
+                    print("ss")
+                    with open('user.json', 'r')as fp:
+                         data = json.load(fp)
+        else:
+             data = []
         data.append(user)
-        with open('user.json', "w") as file:
-             json.dump(data, file,separators=(',',': '))
-             file.close()
-
+        with open('user.json', "w",encoding='utf-8') as file:
+                json.dump(data, file,separators=(',',': '))
+                file.close()
 
     def intials(self):
         return self.first_name + "."+ self.last_name
@@ -56,12 +79,18 @@ class Blog(object):
         blog['body'] = self.body
         blog['create_date'] = self.create_date
         blog['id'] = generate_uuid()
-        with open('blog.json')as fp:
-            blog_data = json.load(fp)
+        print(self)
+        if os.path.isfile('blog.json') and  open('blog.json').read(1):
+                    print("ss")
+                    with open('blog.json', 'r')as fp:
+                        blog_data = json.load(fp)
+        else:
+             blog_data = []
         blog_data.append(blog)
         with open('blog.json', "w") as file:
-             json.dump(blog_data, file,separators=(',',': '))
-             file.close()
+                json.dump(blog_data, file,separators=(',',': '))
+                file.close()
+
 
 
     @classmethod
@@ -95,13 +124,15 @@ class Comments(object):
 
     
 
-u1 = User('fggf','Saurav','sneha@gmail.com','9837238585', 29)
-data = u1.set_user()
-print(json.dumps(u1.getallUser(), indent=4))
-print("____________________________________________________________________________________________________________________")
-b1 = Blog('sdd','jdjded','jdjded', u1)
-b1.set_blog()
-print(json.dumps(b1.getallBlog(), indent=4))
+# u1 = User('SanSnehaya','Arora','sneha@gmail.com','9837238585')
+# u1.set_user()
+# u2 = User('Sanya','Arora','sneha@gmail.com','9837238585')
+# u2.set_user()
+# print(json.dumps(u1.getallUser(), indent=4))
+# print("____________________________________________________________________________________________________________________")
+# b1 = Blog('sdd','jdjded','jdjded', u1)
+# b1.set_blog()
+# print(json.dumps(b1.getallBlog(), indent=4))
 
 # c1 = Comments('Nice!', b1, u1)
 # c1.set_comment()
