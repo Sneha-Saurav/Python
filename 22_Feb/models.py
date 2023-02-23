@@ -9,6 +9,7 @@ blog_data=[]
 data =[]
 user ={}
 blog ={}
+comment ={}
 def generate_uuid():
     id = uuid.uuid4()
     return str(id)
@@ -43,7 +44,7 @@ class User(object):
         user['mobile_no'] = self.mobile_no
         user['id'] = self.uuid
         user['primary_key'] = pk
-        print(pk)
+        # print(pk)
         if os.path.isfile('user.json') and open('user.json').read(1):
                     print("ss")
                     with open('user.json', 'r')as fp:
@@ -74,12 +75,12 @@ class Blog(object):
         self.create_date = create_date
 
     def set_blog(self):
-        blog['user'] = self.user.__dict__
+        blog['user'] = self.user
         blog['title'] = self.title
         blog['body'] = self.body
         blog['create_date'] = self.create_date
         blog['id'] = generate_uuid()
-        print(self)
+        # print(self)
         if os.path.isfile('blog.json') and  open('blog.json').read(1):
                     print("ss")
                     with open('blog.json', 'r')as fp:
@@ -87,7 +88,7 @@ class Blog(object):
         else:
              blog_data = []
         blog_data.append(blog)
-        with open('blog.json', "w") as file:
+        with open('blog.json', "w",encoding='utf-8') as file:
                 json.dump(blog_data, file,separators=(',',': '))
                 file.close()
 
@@ -101,30 +102,38 @@ class Blog(object):
 
 
 class Comments(object):
-    def __init__(self, comment , blog ,  user):
-        self.user = user
+    def __init__(self, comment , blog):
         self.blog = blog
         self.comment = comment
     
 
     def set_comment(self):
-        blog['user'] = self.user.__dict__
-        blog['blog'] = self.blog.__dict__
-        blog['comment'] = self.comment
-        blog['id'] = generate_uuid()
-        # with open('comment.json')as fp:
-        #     c_data = json.load(fp)
-        # c_data.append(blog)
-        with open('comment.json', "w") as file:
-            #  c_data = json.load(file)
-             c_data.append(blog)
-             json.dump(c_data, file,separators=(',',': '), indent=4)
-             file.close()
+        comment['blog'] = self.blog
+        comment['comment'] = self.comment
+        comment['id'] = generate_uuid()
+        if os.path.isfile('comment.json') and  open('comment.json').read(1):
+                    with open('comment.json', 'r')as fp:
+                        c_data = json.load(fp)
+        else:
+             c_data = []
+        print(comment)
+        c_data.append(comment)
+        with open('comment.json', "w",encoding='utf-8') as file:
+                json.dump(c_data, file,separators=(',',': '))
+                file.close()
+    
+    @classmethod
+    def getallComment(self):
+         with open('comment.json', 'r')as fp:
+            data = json.load(fp)
+            return data
+
 
 
     
 
 # u1 = User('SanSnehaya','Arora','sneha@gmail.com','9837238585')
+# print(u1.__dict__)
 # u1.set_user()
 # u2 = User('Sanya','Arora','sneha@gmail.com','9837238585')
 # u2.set_user()
@@ -137,7 +146,3 @@ class Comments(object):
 # c1 = Comments('Nice!', b1, u1)
 # c1.set_comment()
 
-
-
-#create id using uuid 
-# create primary key using increment with decorator

@@ -1,23 +1,100 @@
-from models import User, Blog
+import datetime
+from models import User, Blog , Comments
 import views
 
 def Show_alluser():
     users = User.getallUser()
-    return views.ShowAllUser(users)
+    return views.get_all_user(users)
 
-def create_user():
+def request_user():
     request={}
     print("To create the user , input your data:")
-    request['first_name'] = input('Enter your first name')
-    request['last_name'] = input('Enter your last name')
-    request['email'] = input("Enter you email")
-    request['mobile_no'] = input("Enter your mobilr number")
-    return views.request_user(request)
+    request['first_name'] = input('Enter your first name:')
+    request['last_name'] = input('Enter your last name:')
+    request['email'] = input("Enter you email:")
+    request['mobile_no'] = input("Enter your mobilr number:")
+    return views.create_user(request)
 
 
+def one_user():
+    users = User.getallUser()
+    id = input('Enter the id:')
+    return views.get_user(users, id)
 
 
+def delete_user():
+    id = input('Enter the id want to delete:')
+    users = User.getallUser()
+    return views.delete_userView(users, id)
+
+
+def request_blog():
+    request={}
+    print("To create the user , input your data:")
+    request['user'] = input('Enter the user id:')
+    request['title'] = input('Enter your title:')
+    request['body'] = input("Enter you body:")
+    request['created_date'] = str(datetime.date.today())
+    list_user = User.getallUser()
+    user = views.get_user(list_user, request['user'])
+    return views.create_blog(request, user)
+
+def Show_allBlogs():
+    blog = Blog.getallBlog()
+    return views.get_all_blogView(blog)
+
+def one_blog():
+    blogs = Blog.getallBlog()
+    id = input('Enter the id:')
+    return views.get_blog(blogs, id)
+
+
+def get_all_blog_users():
+    id =  input("Enter the user id")
+    blog = Blog.getallBlog()
+    return views.get_all_blog_usersView(blog, id)
+
+def add_comment():
+    request ={}
+    request['blog'] = input("Enter your blog id: ")
+    request['comment'] = input("Enter the comment: ")
+    list_blog = Blog.getallBlog()
+    blog = views.get_blog(list_blog, request['blog'])
+    return views.create_comment(request, blog)
+
+# def get_comment():
+#     comment = Comments.getallComment()
+#     return views.get_All_commentView(comment)
+
+
+    
 if __name__ == '__main__':
-    create_user()
-
-    Show_alluser()
+    print(get_all_blog_users())
+    # add_comment()
+    # print(get_comment())
+    # while True:
+    #     print("1. User")
+    #     print("2. Blog")
+    #     print("3. Comments")
+    #     print("1. Create user")
+    #     print("2. Get All user")
+    #     print('3. Get user')
+    #     print("4. Delete user")
+    #     print("5. Create blog")
+    #     print("6. Get All blog")
+    #     print('7. Get blog')
+    #     print("8. Delete blog")
+    #     print("9. Add Comment to Blog")
+    #     print("10. Get Comment")
+         
+    #     option  = input("Enter your choice: ")
+    #     if option ==1:
+    #         print("1. Create user")
+    #         print("2. Get All user")
+    #         print('3. Get user')
+    #         user_option = input("Enter the user choice: ")
+    #         if option == 1:
+    #             request_user()
+    #         elif option == 2:
+    #             print(Show_alluser())
+    #         elif option == 3:
