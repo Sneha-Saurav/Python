@@ -14,6 +14,7 @@ Subjects =[]
 regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 fields =['First Name', 'Last Name' , 'Date of Birth', 'Email', 'Password' ,'Subjects','Class', 'Age']
 r_p = r'[A-Za-z0-9@#$%^&+=]{8,}'
+
 with open('../user.csv') as fp:
         csvreader = csv.reader(fp)
         fields = next(csvreader) # extract the field name 

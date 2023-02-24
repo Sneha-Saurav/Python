@@ -15,13 +15,30 @@ def generate_uuid():
     return str(id)
 
 
+# def primary_key(func):
+#         roll_no = 0 
+#         def wrapper(*args, **kwargs):
+#             nonlocal roll_no
+#             roll_no += 1
+#             return func(*args,pk=roll_no)
+#         return wrapper
+
+
+
 def primary_key(func):
-        roll_no = 0 
-        def wrapper(*args, **kwargs):
-            nonlocal roll_no
-            roll_no += 1
-            return func(*args,pk=roll_no)
+        def wrapper(pk):
+            with open('user.json', 'r')as fp:
+                data = json.load(fp)
+                print(data)
+                for user in data:
+                    if wrapper.pk == user['primary_key']:
+                        # wrapper.pk+=1
+                        pk +=1
+                        print(type(wrapper.pk))
+                return func(pk=wrapper.pk)
+        # wrapper.pk = 1
         return wrapper
+            
 
        
          
@@ -50,7 +67,8 @@ class User(object):
                     with open('user.json', 'r')as fp:
                          data = json.load(fp)
         else:
-             data = []
+            data = []
+            user['primary_key'] = 1
         data.append(user)
         with open('user.json', "w",encoding='utf-8') as file:
                 json.dump(data, file,separators=(',',': '))

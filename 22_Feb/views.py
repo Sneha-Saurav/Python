@@ -76,7 +76,11 @@ def create_comment(req_comment, blog):
 
 def get_All_commentView(comments):
     json_blog = json.dumps(comments, indent=4)
-    return json_blog
+    return 
+
+
+def get_allcomment_blogView():
+    pass
 
 
 

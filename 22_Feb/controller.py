@@ -62,39 +62,79 @@ def add_comment():
     blog = views.get_blog(list_blog, request['blog'])
     return views.create_comment(request, blog)
 
-# def get_comment():
-#     comment = Comments.getallComment()
-#     return views.get_All_commentView(comment)
+def get_comment():
+    comment = Comments.getallComment()
+    return views.get_All_commentView(comment)
 
-
+def get_allcomment_blog():
+    comments = Comments.getallComment()
+    id =  input("Enter the blog id")
+    return views.get_allcomment_blogView(comments,id)
     
 if __name__ == '__main__':
-    print(get_all_blog_users())
+    # print(get_all_blog_users())
     # add_comment()
     # print(get_comment())
     # while True:
     #     print("1. User")
     #     print("2. Blog")
     #     print("3. Comments")
-    #     print("1. Create user")
-    #     print("2. Get All user")
-    #     print('3. Get user')
-    #     print("4. Delete user")
-    #     print("5. Create blog")
-    #     print("6. Get All blog")
-    #     print('7. Get blog')
-    #     print("8. Delete blog")
-    #     print("9. Add Comment to Blog")
-    #     print("10. Get Comment")
+    #     print("4. Exit")
          
     #     option  = input("Enter your choice: ")
     #     if option ==1:
     #         print("1. Create user")
     #         print("2. Get All user")
     #         print('3. Get user')
+    #         print("4. Exit")
     #         user_option = input("Enter the user choice: ")
     #         if option == 1:
-    #             request_user()
+    #             print(request_user())
     #         elif option == 2:
     #             print(Show_alluser())
     #         elif option == 3:
+    #             print(one_user())
+    #         elif option == 4:
+    #             break
+    #         else:
+    #             print("Invalid Input")
+    #     elif option == 2:
+    #         print("1. Create blog")
+    #         print("2. Get All blog")
+    #         print('3. Get blog')
+    #         print("4. Exit")
+    #         user_option = input("Enter the user choice: ")
+    #         if option == 1:
+    #             print(request_blog())
+    #         elif option == 2:
+    #             print(Show_allBlogs())
+    #         elif option == 3:
+    #             print(one_blog())
+    #         elif option == 4:
+    #             break
+    #         else:
+    #             print("Invalid Input")
+    #     elif option == 3:
+    #         print("1. Add Comment to Blog")
+    #         print("2. Get Comment")
+    #         print("3. Get all comments of Blog")
+    #         print("4. Exit")
+    #         if option == 1:
+    #             print(add_comment())
+    #         elif option == 2:
+    #             print(get_comment())
+    #         elif option==3:
+    #             pass
+    #         elif option ==4:
+    #             break
+
+    request_user()
+
+            
+
+
+
+
+
+
+            
