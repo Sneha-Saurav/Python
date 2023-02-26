@@ -52,6 +52,9 @@ def is_valid_password(min_length):
 
 
 
+
+
+
 #Email validation
 def is_email_valid(func):
     def inner(first_name, Last_name, email,*args, **kwarg):
